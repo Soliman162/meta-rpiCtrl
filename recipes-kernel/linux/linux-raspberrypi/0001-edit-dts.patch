@@ -1,0 +1,45 @@
+From 64b4f865b411ba0343a189dacc3f0b5180674c4d Mon Sep 17 00:00:00 2001
+From: Soliman162 <ahmedsliman215@gmail.com>
+Date: Mon, 16 Oct 2023 23:49:30 +0300
+Subject: [PATCH] edit-dts
+
+---
+ arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+index 4e4e47100831..fcf64d84ba7a 100644
+--- a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
++++ b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+@@ -7,6 +7,7 @@
+ #include "bcm283x-rpi-i2c0mux_0_44.dtsi"
+ #include "bcm271x-rpi-bt.dtsi"
+ 
++
+ / {
+ 	compatible = "raspberrypi,3-model-b-plus", "brcm,bcm2837";
+ 	model = "Raspberry Pi 3 Model B+";
+@@ -20,6 +21,15 @@
+ 		serial1 = &uart0;
+ 		mmc1 = &mmcnr;
+ 	};
++
++	7_segment{
++		compatible = "7_segment";
++		status = "okay";
++			segment0{
++						label = "segment7_0";
++						pins = /bits/ 8 <0x02 0x03 0x04 0x11 0x1B 0x16 0x0A 0x1A>;
++					};
++	};
+ };
+ 
+ &gpio {
+@@ -78,6 +88,7 @@
+ 	};
+ };
+ 
++
+ &mmcnr {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdio_pins>;
