@@ -16,12 +16,12 @@
 #define DEVICE_INDEX		0
 #define NUMBER_INDEX		1
 
-static int device_counter = 0;
+static volatile int device_counter = 0;
 static struct cdev seg7_struct ;
 static struct class *device_class;
 static struct device *device_struct;
 static dev_t first_assigned_number = 0;
-static  struct gpio *(*seg7_pins)[GPIO_PINS_NUMBER] = NULL;
+static struct gpio *(*seg7_pins)[GPIO_PINS_NUMBER] = NULL;
 
 const unsigned char SSD_u8Numbers[10] = {0b00111111,0b00000110,0b01011011,0b01001111,0b01100110,0b01101101,0b01111101,0b00000111,0b01111111,0b01101111};
 
@@ -74,12 +74,14 @@ ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size
 	}
 	if( !count )
 	{
-		return -1;
+		pr_err("count = 0\n");
+		return -EIO;
 	}
 	not_copied = copy_from_user(&write_buffer[*offs],user_buffer,count);
 	if( not_copied )
 	{
-		return -1;
+		pr_err("couldn't copy\n");
+		return -EAGAIN;
 	}
 	*offs = count;
 	pr_info("data write to buffer\n");
@@ -128,7 +130,7 @@ int module_probe(struct platform_device *pdev)
 	{
 		pr_info("got child node %s\n",Child_node_Iter->name);
 		/*reallocate size for new node pins*/
-		seg7_pins = (struct gpio * (*)[GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio )*(device_counter+1),GFP_KERNEL);
+		seg7_pins = (struct gpio * (*)[GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio * (*)[GPIO_PINS_NUMBER] )*(device_counter+1),GFP_KERNEL);
 		if( seg7_pins == NULL )
 		{
 			pr_err("Couldn't allocate memory for node %d\n",device_counter);
@@ -191,7 +193,7 @@ static int __init seg_7display_init(void)
 	if(ret_value != 0)
 	{
 		pr_err("couldn't allocate number\n");
-		return -1;
+		return ret_value;
 	}
 	cdev_init(&seg7_struct,&file_Op);
 	ret_value = cdev_add(&seg7_struct,first_assigned_number,GPIO_PINS_NUMBER);
@@ -200,15 +202,18 @@ static int __init seg_7display_init(void)
 		pr_err("cdev add failed\n");
 		goto DELETE_DEVICE_NUMBER;
 	}
-	if( (device_class = class_create(THIS_MODULE,CLASS_NAME)) == NULL )
+	device_class = class_create(THIS_MODULE,CLASS_NAME);
+	if( IS_ERR(device_class))
 	{
 		pr_err("device class failed\n");
+		ret_value = PTR_ERR(device_class);
 		goto DELETE_DEVICE_STRUCT;
 	}
 	device_struct = device_create(device_class,NULL,first_assigned_number,NULL,DEVICE_FILE_NAME);
-	if( device_struct == NULL )
+	if( IS_ERR(device_struct) )
 	{
 		pr_err("device create failed\n");
+		ret_value = -ENODEV;
 		goto DELETE_CLASS;
 	}
 
@@ -229,7 +234,7 @@ static int __init seg_7display_init(void)
 		cdev_del(&seg7_struct);
 	DELETE_DEVICE_NUMBER:
 		unregister_chrdev_region(first_assigned_number,GPIO_PINS_NUMBER);
-		return -1;
+		return ret_value;
 }
 
 static void __exit seg_7display_exit(void)
