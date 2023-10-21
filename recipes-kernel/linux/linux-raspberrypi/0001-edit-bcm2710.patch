@@ -1,0 +1,24 @@
+From 333a27c7b455190017b33b90e57df8f00479b6b9 Mon Sep 17 00:00:00 2001
+From: Soliman162 <ahmedsliman215@gmail.com>
+Date: Fri, 20 Oct 2023 23:00:41 +0300
+Subject: [PATCH] edit-bcm2710
+
+---
+ arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+index b4bdb5173dfc..ef0cf08b95bd 100644
+--- a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
++++ b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+@@ -29,6 +29,10 @@
+ 						label = "segment7_0";
+ 						pins = /bits/ 8 <0x02 0x03 0x04 0x11 0x1B 0x16 0x0A 0x1A>;
+ 					};
++			segment1{
++						label = "segment7_1";
++						pins = /bits/ 8 <0x12 0x17 0x18 0x19 0x08 0x07 0x0C 0x10>;
++					};
+ 	};
+ };
+ 

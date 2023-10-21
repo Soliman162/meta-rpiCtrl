@@ -257,3 +257,65 @@ module_exit(seg_7display_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Soliman");
 MODULE_DESCRIPTION("Simple device driver for 7 segment");
+
+/*************************/
+
+/* 	seg7_pins = (struct gpio * (*)[GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio ),GFP_KERNEL);	
+
+	if( seg7_pins == NULL )
+	{
+		pr_err("Couldn't allocate memory\n");
+		return -ENOMEM;
+	}
+	if((Child_node_Iter = of_get_next_child(parent_node,Child_node_Iter)) == NULL)
+	{
+		ret = -EINVAL;
+		pr_err("parent node is empty \n");
+		goto GET_CHILD_ERROR; 
+	} */
+	
+/* 	do
+	{		
+		pr_info("got child node %s\n",Child_node_Iter->name);
+		ret = of_property_read_u8_array(Child_node_Iter,"pins",Pins_array,GPIO_PINS_NUMBER);
+		if( ret != 0 )
+		{
+			pr_err("error couldn't read array \n");
+			goto GET_PROPERETY_ERROR;
+		}
+		for(i=0;i<GPIO_PINS_NUMBER;i++)
+		{
+			pr_info("start set pin %d\n",i);
+			Pin_label = kasprintf(GFP_KERNEL,"pin%c",('A'+i));
+			(*seg7_pins)[device_counter][i] = (struct gpio){Pins_array[i],GPIOF_OUT_INIT_LOW,Pin_label};
+			pr_info("finish set pin %d with label %s\n",i,Pin_label);
+		}
+		ret = gpio_request_array((*seg7_pins)[device_counter],GPIO_PINS_NUMBER);
+		if( ret != 0 )
+		{
+			pr_err("gpio request failed\n");
+			goto GET_PROPERETY_ERROR;
+		} 
+		pr_info("Finish setting up the node %d pins\n",device_counter);
+		device_counter++;
+		if( (Child_node_Iter = of_get_next_child(parent_node,Child_node_Iter)) != NULL )
+		{
+			seg7_pins = (struct gpio * (*)[GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio )*(device_counter+1),GFP_KERNEL);
+			if( seg7_pins == NULL )
+			{
+				pr_err("Couldn't allocate memory for node %d\n",device_counter);
+				of_node_put(Child_node_Iter);
+				return -ENOMEM;
+			}
+		}		
+		
+	}while(Child_node_Iter!=NULL); */
+
+
+
+
+
+	/* 	for(i=device_counter-1;i>=0;i--)
+	{
+		kfree((*seg7_pins)[i]);
+	} */

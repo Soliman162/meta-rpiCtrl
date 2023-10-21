@@ -33,8 +33,8 @@ IMAGE_INSTALL:append = " openssh"
 # install tzdata
 IMAGE_INSTALL:append = " tzdata tzdata-africa"
 
-IMAGE_INSTALL_:append = " psplash"
-IMAGE_FEATURES += " splash "
+# IMAGE_INSTALL_:append = " psplash"
+# IMAGE_FEATURES += " splash "
 
 # install net-tools
 IMAGE_INSTALL:append = " net-tools ethtool"
