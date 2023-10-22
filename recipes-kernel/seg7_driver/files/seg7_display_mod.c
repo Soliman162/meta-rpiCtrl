@@ -64,7 +64,7 @@ ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size
 	int not_copied = 0;
 	int seg7_index = 0;
 	unsigned char seg7_num = 0;
-	unsigned char seg7_pin = 0;
+	unsigned char pin = 0;
 	int WRITE_SIZE = device_counter + 2 ;
 	unsigned char write_buffer[WRITE_SIZE];
 	
@@ -95,9 +95,9 @@ ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size
 	  )
 	{
 		seg7_num = SSD_u8Numbers[write_buffer[NUMBER_INDEX]-'0'];
-		for( seg7_pin=0;seg7_pin<GPIO_PINS_NUMBER;seg7_pin++ )
+		for( pin=0;pin<GPIO_PINS_NUMBER;pin++ )
 		{
-			gpio_set_value(seg7_pins[seg7_index][seg7_pin].gpio,GET_BIT(seg7_num,seg7_pin)); 
+			gpio_set_value(seg7_pins[seg7_index][pin].gpio,GET_BIT(seg7_num,pin)); 
 		}
 	}
 	else
@@ -151,7 +151,6 @@ int module_probe(struct platform_device *pdev)
 			Pin_label = kasprintf(GFP_KERNEL,"pin%c",('A'+i));
 			seg7_pins[device_counter][i] = (struct gpio){Pins_array[i],GPIOF_OUT_INIT_LOW,Pin_label};
 			pr_info("finish set pin %d with label %s\n",i,Pin_label);
-			// kfree(Pin_label);
 		}
 		/*init pins*/
 		ret = gpio_request_array(seg7_pins[device_counter],GPIO_PINS_NUMBER);
@@ -242,7 +241,6 @@ static int __init seg_7display_init(void)
 
 static void __exit seg_7display_exit(void)
 {   
-	int seg7_pin = 0;
 	platform_driver_unregister(&segment7);
 	cdev_del(&seg7_struct);
 	device_destroy(device_class,first_assigned_number);
