@@ -6,6 +6,7 @@ class seg7_display
 private:
     /* data */
     static int dev_num;
+    std::string last_number = "0";
     std::fstream dev_file_handler;
     const std::string file_path = "/dev/7_segDisplay";
 public:

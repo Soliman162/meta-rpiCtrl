@@ -9,7 +9,10 @@
 int main(void)
 {
 
-    seg7_display test_app;
+    seg7_display seg0;
+    seg7_display seg1;
+
+    
 
 
 

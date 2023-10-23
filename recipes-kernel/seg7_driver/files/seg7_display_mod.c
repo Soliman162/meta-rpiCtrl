@@ -129,7 +129,7 @@ int module_probe(struct platform_device *pdev)
 	{
 		pr_info("got child node %s\n",Child_node_Iter->name);
 		/*reallocate size for new node pins*/
-		seg7_pins = (struct gpio (*) [GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio (*) [GPIO_PINS_NUMBER])*(device_counter+1),GFP_KERNEL);
+		seg7_pins = (struct gpio (*) [GPIO_PINS_NUMBER])krealloc(seg7_pins,sizeof(struct gpio)*(device_counter+1),GFP_KERNEL);
 		if( IS_ERR_OR_NULL(seg7_pins) ) 
 		{
 			pr_err("Couldn't allocate memory for node %d\n",device_counter);
