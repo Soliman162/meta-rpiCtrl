@@ -6,9 +6,17 @@
 
 int seg7_display::dev_num = 0;
 
-seg7_display::seg7_display(/* args */)
+seg7_display::seg7_display(int Copy_index):index(Copy_index)
 {
-    dev_num++;
+    if( dev_num < 2 )
+    {
+        dev_num++;
+    }
+    else
+    {
+        std::cerr << "can't create more than 2\n";
+    }
+    
 }
 
 seg7_display::~seg7_display()

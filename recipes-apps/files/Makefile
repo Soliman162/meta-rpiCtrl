@@ -4,7 +4,7 @@ all: build
 
 
 build: 
-	aarch64-linux-gnu-g++ $(SRC) -o test
+	aarch64-linux-gnu-g++ -g3 -O0 -ggdb $(SRC) -o test
 
 clean: 
 	rm test

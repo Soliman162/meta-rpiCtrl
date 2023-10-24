@@ -167,8 +167,11 @@ int module_probe(struct platform_device *pdev)
 		pr_err("parent node is empty \n");
 		return -EINVAL;
 	}
-
-	pr_info("Finish setting up the node pins\n");
+	else
+	{
+		pr_info("Finish setting up the node pins\n");
+		goto GET_PROPERETY_ERROR;
+	}
 	GET_CHILD_ERROR:
 		kfree(seg7_pins);
 	GET_PROPERETY_ERROR:
