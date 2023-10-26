@@ -1,2 +1,3 @@
 .vscode
 recipes-kernel/seg7_driver/save.txt
+recipes-apps/server_app/files/gen_tar.sh

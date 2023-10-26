@@ -28,7 +28,7 @@ IMAGE_INSTALL += " linux-firmware-rpidistro-bcm43430"
 IMAGE_INSTALL:append = " gcc g++ cmake make gdb ninja"
 
 # install ssh
-# IMAGE_INSTALL:append = " openssh"
+IMAGE_INSTALL:append = " openssh"
 
 # install tzdata
 IMAGE_INSTALL:append = " tzdata tzdata-africa"
