@@ -26,7 +26,7 @@ seg7_display::~seg7_display()
 
 void seg7_display::write_number(std::string number)
 {
-    if( last_number != number.at(1) )
+    if( last_number != number.at(0) )
     {
         number.insert(number.begin(),index);
         dev_file_handler.open(file_path,std::ios::out);

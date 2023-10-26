@@ -12,16 +12,16 @@
 int main(void)
 {
     server pi;
-    seg7_display seg0('0');
-    seg7_display seg1('1');
-    int err_check = -1;
     std::string rec ;
+    seg7_display seg[2]{'0','1'};
 
+    int seg_index = 0;
+    int err_check = -1;
     std::string Help_msg =  "/**********help msg**********/ \n"
                             "/*****choose operation*******/ \n"
                             "1- Set 7 Segment0              \n"
-                            "2- Set 7 Segment1              \n";
-
+                            "2- Set 7 Segment1              \n"
+                            "3- Turn off connection         \n";
 
     err_check = pi.server_listen();
     if(err_check!=0)
@@ -36,21 +36,29 @@ int main(void)
 
     while(true)
     {
+        /*recive command*/
         rec = pi.recieve_msg();
 
-        if( rec.c_str() != NULL )
+        switch (rec.at(0))
         {
-            std::cout << "send number: \n";
-            err_check = pi.send_msg(static_cast<std::string>("send number:"));
-            if(err_check!=0)
-            {
-                return -1;
-            }
-            rec = pi.recieve_msg();
-            if( rec.c_str() != NULL )
-            {
-                seg0.write_number(rec);
-            }
+            case '1':
+            case '2':
+                seg_index = rec.at(0) - '1';
+                /* code */
+                std::cout << "send number: \n";
+                pi.send_msg(static_cast<std::string>("send number:\n"));
+                /*recive number*/
+                rec = pi.recieve_msg();
+                seg[seg_index].write_number(rec);
+                break;  
+            case '3':
+                pi.send_msg(static_cast<std::string>("Turn off connection\n"));
+                pi.~server();
+                exit (0);
+                break;          
+            default:
+                pi.send_msg(static_cast<std::string>("command not available\n"));
+                break;
         }
     }    
 
