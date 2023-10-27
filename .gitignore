@@ -1,3 +1,4 @@
 .vscode
 recipes-kernel/seg7_driver/save.txt
 recipes-apps/server_app/files/gen_tar.sh
+recipes-connectivity/wpa-supplicant/wpa-supplicant/wpa_supplicant-nl80211-wlan0.conf

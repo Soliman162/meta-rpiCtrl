@@ -13,7 +13,7 @@ class seg7_display
         std::fstream dev_file_handler;
         const std::string file_path = "/dev/7_segDisplay";
     public:
-        seg7_display(char Copy_index) ;
+        seg7_display(const char Copy_index)  ;
         ~seg7_display();
         void write_number(std::string number);
 };

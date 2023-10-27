@@ -67,7 +67,7 @@ ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size
 	unsigned char pin = 0;
 	int WRITE_SIZE = device_counter + 2 ;
 	unsigned char write_buffer[WRITE_SIZE];
-	
+
 	if( *offs+count > WRITE_SIZE )
 	{
 		count = WRITE_SIZE - *offs;
@@ -81,7 +81,7 @@ ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size
 	if( not_copied )
 	{
 		pr_err("couldn't copy\n");
-		return -EAGAIN;
+		return -EFAULT;
 	}
 	*offs = count;
 	pr_info("data write to buffer\n");
