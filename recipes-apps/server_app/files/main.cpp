@@ -25,11 +25,6 @@ int main(void)
                                 "3- Turn off connection         \n";
 
     if(pi.server_listen() < 0){return -1;}
-/*     if(err_check!=0)
-    {
-        return -1;
-    } */
-
     while(true)
     {
         if(pi.send_msg(commands_msg) < 0){return -1;}

@@ -12,10 +12,22 @@
 
 #include "seg7_display_mod.h"
 
+#define GPIO_PINS_NUMBER	8
+
+#define DEVICE_FILE_NAME	(char *)"7_segDisplay"
+#define DEVICE_DRIVER_NAME	(char *)"seg7 dislplay"
+#define CLASS_NAME			(char *)"Seg7_class"
+
 #define GET_BIT(reg,bit)	((reg>>bit)&1)
 
 #define DEVICE_INDEX		0
 #define NUMBER_INDEX		1
+
+static int open_module (struct inode *node, struct file *file_mod);
+static ssize_t write_module(struct file *file_mod, const char __user *user_buffer, size_t count, loff_t *offs);
+static int close_module (struct inode *node, struct file *file_mod);
+static int module_probe(struct platform_device *pdev);
+static void module_shutdown(struct platform_device *pdev);
 
 static volatile int device_counter = 0;
 static struct cdev seg7_struct ;

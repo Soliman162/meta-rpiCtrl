@@ -1,0 +1,64 @@
+From c5e3c7c5d905104221b2e05ffeb0e7933a70cbd5 Mon Sep 17 00:00:00 2001
+From: Soliman162 <ahmedsliman215@gmail.com>
+Date: Sat, 28 Oct 2023 12:38:02 +0200
+Subject: [PATCH] add-leds
+
+---
+ arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts | 37 ++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+index ef0cf08b95bd..fd1bb8bd075f 100644
+--- a/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
++++ b/arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts
+@@ -7,6 +7,8 @@
+ #include "bcm283x-rpi-i2c0mux_0_44.dtsi"
+ #include "bcm271x-rpi-bt.dtsi"
+ 
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
+ 
+ / {
+ 	compatible = "raspberrypi,3-model-b-plus", "brcm,bcm2837";
+@@ -34,6 +36,41 @@
+ 						pins = /bits/ 8 <0x12 0x17 0x18 0x19 0x08 0x07 0x0C 0x10>;
+ 					};
+ 	};
++
++	user_leds {
++        compatible = "gpio-leds";
++
++        led-13 {
++	    label = "led13";
++	    default-state = "off";
++            function = LED_FUNCTION_STATUS;
++            gpios = <&gpio 13 GPIO_ACTIVE_HIGH>;
++        };
++
++        led-19 {
++	    label = "led19";
++	    default-state = "off";
++            function = LED_FUNCTION_STATUS;
++            gpios = <&gpio 19 GPIO_ACTIVE_HIGH>;
++            
++        };
++	 led-5 {
++            label = "led5";
++            default-state = "off";
++            function = LED_FUNCTION_STATUS;
++            gpios = <&gpio 5 GPIO_ACTIVE_HIGH>;
++        };
++
++        led-6 {
++            label = "led6";
++            default-state = "off";
++            function = LED_FUNCTION_STATUS;
++            gpios = <&gpio 6 GPIO_ACTIVE_HIGH>;
++
++        };
++
++    };
++
+ };
+ 
+ &gpio {

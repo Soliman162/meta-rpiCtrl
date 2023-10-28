@@ -1,7 +1,7 @@
 From 64b4f865b411ba0343a189dacc3f0b5180674c4d Mon Sep 17 00:00:00 2001
 From: Soliman162 <ahmedsliman215@gmail.com>
 Date: Mon, 16 Oct 2023 23:49:30 +0300
-Subject: [PATCH] edit-dts
+Subject: [PATCH] add-segment0
 
 ---
  arch/arm/boot/dts/bcm2710-rpi-3-b-plus.dts | 11 +++++++++++
