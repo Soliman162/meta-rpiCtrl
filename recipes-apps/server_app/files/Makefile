@@ -1,6 +1,6 @@
 appname := server
-srcfiles := main.cpp seg7_src.cpp server.cpp
-objects := main.o seg7_src.o server.o
+srcfiles := main.cpp seg7_src.cpp server.cpp LED.cpp
+objects := main.o seg7_src.o server.o LED.o
 
 all: $(appname)
 

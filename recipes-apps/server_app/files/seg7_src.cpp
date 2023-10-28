@@ -5,6 +5,7 @@
 #include "seg7_header.hpp"
 
 int seg7_display::dev_num = 0;
+std::fstream seg7_display::dev_file_handler;
 
 seg7_display::seg7_display(char Copy_index):index(Copy_index),last_number('0')
 {

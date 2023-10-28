@@ -10,8 +10,6 @@
 #include <linux/slab.h>
 #include <linux/platform_device.h>
 
-#include "seg7_display_mod.h"
-
 #define GPIO_PINS_NUMBER	8
 
 #define DEVICE_FILE_NAME	(char *)"7_segDisplay"
