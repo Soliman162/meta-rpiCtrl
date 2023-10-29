@@ -4,3 +4,4 @@ recipes-apps/server_app/files/gen_tar.sh
 recipes-connectivity/wpa-supplicant/wpa-supplicant/wpa_supplicant-nl80211-wlan0.conf
 recipes-apps/server_app/files/a.out
 recipes-apps/server_app/files/test.cpp
+README.md
