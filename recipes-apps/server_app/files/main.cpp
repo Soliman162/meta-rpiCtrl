@@ -19,10 +19,13 @@ int main(void)
     seg7_display seg0('0');
     seg7_display seg1('1');
 
+
     LED led5(OFF,5);
     LED led6(OFF,6);
     LED led13(OFF,13);
     LED led19(OFF,19);
+
+    // LED *Leds_arr[4] = {&led5,&led6,&led13,&led19};
     
     int OnTime{0};
     int OffTime{0};
@@ -32,8 +35,9 @@ int main(void)
                                 "2- Set 7 Segment1              \n"
                                 "3- Turn LED ON                 \n"
                                 "4- Turn LED OFF                \n"
-                                "5- Flash LED                   \n"
-                                "6- Turn off connection         \n";
+                                "5- Toggle LED                  \n"
+                                "6- Flash LED                   \n"
+                                "7- Turn off connection         \n";
 
     if(pi.server_listen() < 0){return -1;}
     while(true)
@@ -65,16 +69,16 @@ int main(void)
                 pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
                 /*recive number*/
                 rec = pi.recieve_msg();
-                if( rec.at(0) == led5.Get_pinNumber().at(0) )
+                if( rec == led5.Get_pinNumber() )
                 {
                     led5.LED_ON();
-                }else if( rec.at(0) == led6.Get_pinNumber().at(0) )
+                }else if( rec == led6.Get_pinNumber() )
                 {
                     led6.LED_ON();
-                }else if( !rec.compare(0,2,led13.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led13.LED_ON();
-                }else if( !rec.compare(0,2,led19.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led19.LED_ON();
                 }
@@ -88,16 +92,16 @@ int main(void)
                 pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
                 /*recive number*/
                 rec = pi.recieve_msg();
-                if( rec.at(0) == led5.Get_pinNumber().at(0) )
+                if( rec == led6.Get_pinNumber() )
                 {
                     led5.LED_OFF();
-                }else if( rec.at(0) == led6.Get_pinNumber().at(0) )
+                }else if( rec == led6.Get_pinNumber() )
                 {
                     led6.LED_OFF();
-                }else if( !rec.compare(0,2,led13.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led13.LED_OFF();
-                }else if( !rec.compare(0,2,led19.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led19.LED_OFF();
                 }
@@ -111,20 +115,43 @@ int main(void)
                 pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
                 /*recive number*/
                 rec = pi.recieve_msg();
+                if( rec == led6.Get_pinNumber() )
+                {
+                    led5.LED_TOG();
+                }else if( rec == led6.Get_pinNumber() )
+                {
+                    led6.LED_TOG();
+                }else if( rec == led6.Get_pinNumber() )
+                {   
+                    led13.LED_TOG();
+                }else if( rec == led6.Get_pinNumber() )
+                {   
+                    led19.LED_TOG();
+                }
+                else
+                {
+                   pi.send_msg(static_cast<std::string>("Invalid LED number\n")); 
+                }
+                break;
+            case '6':
+                std::cout << "send number: \n";
+                pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
+                /*recive number*/
+                rec = pi.recieve_msg();
                 pi.send_msg(static_cast<std::string>("send on time - off time. ex(10-5):\n"));
                 delayTime = pi.recieve_msg();
                 OnTime = std::stoi(delayTime.substr(0,delayTime.find('-')));
                 OffTime = std::stoi(delayTime.substr(delayTime.find('-') + 1));
-                if( rec.at(0) == led5.Get_pinNumber().at(0) )
+                if( rec == led6.Get_pinNumber() )
                 {
                     led5.LED_TOG(OnTime,OffTime);
-                }else if( rec.at(0) == led6.Get_pinNumber().at(0) )
+                }else if( rec == led6.Get_pinNumber() )
                 {
                     led6.LED_TOG(OnTime,OffTime);
-                }else if( !rec.compare(0,2,led13.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led13.LED_TOG(OnTime,OffTime);
-                }else if( !rec.compare(0,2,led19.Get_pinNumber()) )
+                }else if( rec == led6.Get_pinNumber() )
                 {   
                     led19.LED_TOG(OnTime,OffTime);
                 }
@@ -133,7 +160,7 @@ int main(void)
                    pi.send_msg(static_cast<std::string>("Invalid LED number\n")); 
                 }
                 break;
-            case '6':
+            case '7':
                 pi.send_msg(static_cast<std::string>("Turn off connection\n"));
                 pi.~server();
                 exit (0);
