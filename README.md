@@ -22,8 +22,8 @@ Before proceeding, ensure you have the following prerequisites:
     - [meta-openembedded](https://github.com/openembedded/meta-openembedded.git)
     - [meta-raspberrypi](https://github.com/agherzan/meta-raspberrypi.git)
 
-    > [!IMPORTANT] 
-    > make sure that all branches of these repositories match with dunfell as this layer was built and tested under Dunfell. 
+> [!IMPORTANT] 
+> make sure that all branches of these repositories match with dunfell as this layer was built and tested under Dunfell. 
 
 ## Step 2: Initialize the build environment:
 ```shell
@@ -42,6 +42,11 @@ bitbake-layers add-layer <path_to_this_repo_folder>
     - `EXTRA_IMAGE_FEATURES = "dev-pkgs tools-sdk"`
     - `PACKAGE_CLASSES = "package_deb"`
 3. Save and close the file.
+
+4. Edit ssid and password for your wifi:
+    - `cd recipes-connectivity/wpa-supplicant/wpa-supplicant/`
+    - rename file `mv wpa_supplicant-nl80211-wlan0.conf.example wpa_supplicant-nl80211-wlan0.conf`
+    - Open the `wpa_supplicant-nl80211-wlan0.conf` file in a text editor and modify ssid and password.
 
 ## Step 4: Start the build process: 
 ```shell
