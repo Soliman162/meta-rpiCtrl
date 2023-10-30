@@ -204,11 +204,17 @@ static int __init seg_7display_init(void)
 {
 	int ret_value = 0;
 
+	ret_value = platform_driver_register(&segment7); 
+	if( ret_value!=0 )
+	{
+		pr_err("failed to register platform device \n");
+		return ret_value;
+	}
 	ret_value = alloc_chrdev_region(&first_assigned_number,0,(u8)GPIO_PINS_NUMBER,DEVICE_DRIVER_NAME);
 	if(ret_value != 0)
 	{
 		pr_err("couldn't allocate number\n");
-		return ret_value;
+		goto PLATFORM_REGISTER_ERROR;
 	}
 	cdev_init(&seg7_struct,&file_Op);
 	ret_value = cdev_add(&seg7_struct,first_assigned_number,GPIO_PINS_NUMBER);
@@ -232,23 +238,18 @@ static int __init seg_7display_init(void)
 		goto DELETE_CLASS;
 	}
 
-	ret_value = platform_driver_register(&segment7); 
-	if( ret_value!=0 )
-	{
-		pr_err("failed to register platform device \n");
-		goto PLATFORM_REGISTER_ERROR;
-	}
+
 
 	return 0;
 
-	PLATFORM_REGISTER_ERROR:
-		device_destroy(device_class,first_assigned_number);
 	DELETE_CLASS:
 		class_destroy(device_class);
 	DELETE_DEVICE_STRUCT:
 		cdev_del(&seg7_struct);
 	DELETE_DEVICE_NUMBER:
 		unregister_chrdev_region(first_assigned_number,GPIO_PINS_NUMBER);
+	PLATFORM_REGISTER_ERROR:
+		platform_driver_unregister(&segment7);
 		return ret_value;
 }
 
