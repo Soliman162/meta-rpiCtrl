@@ -1,6 +1,6 @@
 # Creating a Yocto Image for Raspberry Pi 3 b+
 
-This README provides step-by-step instructions for creating a Yocto image to Control raspberry pi using socket programming.
+### This README provides step-by-step instructions for creating a Yocto image to Control raspberry pi using socket programming.
 
 ## Prerequisites
 
