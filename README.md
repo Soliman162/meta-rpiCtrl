@@ -30,7 +30,6 @@ Before proceeding, ensure you have the following prerequisites:
 source poky/oe-init-build-env 
 bitbake-layers add-layer <path_to_raspberrypi_layer>
 bitbake-layers add-layer <path_to_openembedded_layer/meta-oe>
-bitbake-layers add-layer <path_to_openembedded_layer/meta-oe>
 bitbake-layers add-layer <path_to_this_repo_folder>
 ```
 ## Step 3: Configure the Build:
