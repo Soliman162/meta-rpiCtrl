@@ -25,7 +25,6 @@ LED::LED(LED_STATUS init_status,uint8_t CopY_num):status(init_status),Pin_number
                                                 ,delayOFF_file_path(DELAYOFF_FILE_PATH(CopY_num))
                                                 ,Trigger_file_path(TRIGGER_FILE_PATH(CopY_num))
 {
-    Timer_Disable();
     if( status == ON )
     {
         LED_ON();
@@ -80,7 +79,7 @@ void LED::LED_TOG(int ON_time, int OFF_time)
 {
     Timer_enable();
     File_Write(delayON_file_path,std::to_string(ON_time));
-    File_Write(Trigger_file_path,std::to_string(OFF_time));
+    File_Write(delayOFF_file_path,std::to_string(OFF_time));
 }
 
 std::string LED::Get_pinNumber(void)
