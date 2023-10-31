@@ -59,7 +59,7 @@ bitbake rpictrl
 2. Copy the generated image file to an SD card 
 `sudo bmaptool copy --bmap *.rootfs.wic.bmap  *.rootfs.wic.bz2  /dev/<storage_device>`
 
-## Step 7: Hardware connection:
+### Hardware connection:
 - seven segment0 pins (a:GPIO2 b:GPIO3 c:GPIO4 d:GPIO17 e:GPIO27 f:GPIO22 g:GPIO10 com:GPIO26)
 - seven segment1 pins (a:GPIO18 b:GPIO23 c:GPIO24 d:GPIO25 e:GPIO8 f:GPIO7 g:GPIO12 com:GPIO16)
 - leds pins (GPIO5,GPIO6,GPIO13,GPIO19)
