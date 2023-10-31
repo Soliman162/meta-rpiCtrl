@@ -67,14 +67,6 @@ void LED::LED_OFF(void)
     File_Write(brightness_file_path,Value); 
     status = OFF;
 }
-
-void LED::LED_TOG(void)
-{
-    std::string Value = std::to_string(~status);
-    File_Write(brightness_file_path,Value);  
-    status = static_cast<LED_STATUS>(~status); 
-}
-
 void LED::LED_TOG(int ON_time, int OFF_time)
 {
     Timer_enable();

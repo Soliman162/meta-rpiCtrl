@@ -10,6 +10,14 @@
 #include "server.hpp"
 #include "LED.hpp"
 
+#define OP_SET_SEGMENT0         '1'
+#define OP_SET_SEGMENT1         '2'
+#define OP_LED_ON               '3'
+#define OP_LED_OFF              '4'
+#define OP_LED_TOG              '5'
+#define OP_LED_FLASH            '6'
+#define OP_TURN_OFF_CONNECTION  '7'        
+
 LED led5(OFF,5);
 LED led6(OFF,6);
 LED led13(OFF,13);
@@ -45,14 +53,14 @@ int main(void)
     while(true)
     {
         if(pi.send_msg(commands_msg) < 0){return -1;}
-        if(pi.send_msg(static_cast<std::string>("send OP_numbereration number\n"))<0){return -1;}
+        if(pi.send_msg(static_cast<std::string>("send operation number\n"))<0){return -1;}
         /*recive command*/
         rec = pi.recieve_msg();
         OP_number = rec.at(0);
         switch (OP_number)
         {
-            case '1':
-            case '2':
+            case OP_SET_SEGMENT0:
+            case OP_SET_SEGMENT1:
                 seg_index = OP_number - '1';
                 std::cout << "send number: \n";
                 pi.send_msg(static_cast<std::string>("send number (0:9):\n"));
@@ -66,9 +74,8 @@ int main(void)
                     seg1.write_number(rec);
                 }
                 break;  
-            case '3':
-            case '4':
-            case '5':
+            case OP_LED_ON:
+            case OP_LED_OFF:
                 std::cout << "send number: \n";
                 pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
                 /*recive number*/
@@ -76,14 +83,14 @@ int main(void)
                 temp_LED = GET_LED(rec);
                 if( temp_LED != NULL)
                 {
-                    OP_number == '3' ? temp_LED->LED_ON() : OP_number == '4' ? temp_LED->LED_OFF() : temp_LED->LED_TOG();
+                    OP_number == OP_LED_ON ? temp_LED->LED_ON() : temp_LED->LED_OFF();
                 }
                 else
                 {
                     pi.send_msg(static_cast<std::string>("Invalid LED number\n"));
                 }
                 break;
-            case '6':
+            case OP_LED_FLASH:
                 std::cout << "send number: \n";
                 pi.send_msg(static_cast<std::string>("send LED number (5,6,13,19):\n"));
                 /*recive number*/
@@ -102,7 +109,7 @@ int main(void)
                    pi.send_msg(static_cast<std::string>("Invalid LED number\n")); 
                 }
                 break;
-            case '7':
+            case OP_TURN_OFF_CONNECTION:
                 pi.send_msg(static_cast<std::string>("Turn off connection\n"));
                 pi.~server();
                 exit (0);

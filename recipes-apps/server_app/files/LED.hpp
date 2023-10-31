@@ -33,7 +33,6 @@ public:
 
     void LED_ON(void);
     void LED_OFF(void);
-    void LED_TOG(void);
     void LED_TOG(int ON_time, int OFF_time);
 
     std::string Get_pinNumber(void);
