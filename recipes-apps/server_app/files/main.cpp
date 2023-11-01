@@ -116,6 +116,12 @@ int main(void)
                 break;
             case OP_TURN_OFF_CONNECTION:
                 pi.send_msg(static_cast<std::string>("Turn off connection\n"));
+                for(ptr=Vled.begin();ptr<Vled.end();ptr++)
+                {
+                    ptr->~LED();
+                }
+                seg0.~seg7_display();
+                seg1.~seg7_display();
                 pi.~server();
                 exit (0);
                 break;          
