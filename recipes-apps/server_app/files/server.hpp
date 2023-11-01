@@ -1,16 +1,13 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-const int BUFFER_SIZE =1024;
-
-
 class server
 {
 private:
     /* data */
     
     const int PORT;
-    char rec_buffer[BUFFER_SIZE];
+    std::string rec_buffer;
     int bytesRead;
     int serverSocket;
     int clientSocket;
@@ -24,9 +21,11 @@ public:
     server();
     ~server();
 
-    char * recieve_msg(void);
+    std::string recieve_msg(void);
     int server_listen(void);
     int send_msg(std::string msg);
+
+    int Get_bufferSize(void);
 };
 
 #endif

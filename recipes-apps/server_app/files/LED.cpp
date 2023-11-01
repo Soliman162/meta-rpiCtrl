@@ -74,7 +74,7 @@ void LED::LED_TOG(int ON_time, int OFF_time)
     File_Write(delayOFF_file_path,std::to_string(OFF_time));
 }
 
-std::string LED::Get_pinNumber(void)
+int LED::Get_pinNumber(void)
 {
-    return std::to_string(Pin_number);
+    return Pin_number;
 }

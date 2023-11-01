@@ -7,10 +7,11 @@
 #include <sys/socket.h>
 #include <cstring>
 #include <netdb.h>
+#include <functional>
 
 #include "server.hpp"
 
-server::server():PORT(8080)
+server::server():PORT(8080),rec_buffer(50, '\0')
 {
     // Create a socket
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -78,15 +79,15 @@ int server::accept_msg(void)
     return 0;
 }
 
-char * server::recieve_msg(void)
+std::string server::recieve_msg(void)
 {
     // Receive and print client message
-    bytesRead = read(clientSocket, rec_buffer, BUFFER_SIZE - 1);
+    bytesRead = read(clientSocket, &rec_buffer[0] , rec_buffer.size());
     if (bytesRead < 0) {
         std::cerr << "Failed to read from socket.\n";
-        return NULL;
+        return "";
     }
-    rec_buffer[bytesRead] = '\0';
+    // rec_buffer.resize(bytesRead);
     std::cout << "Received message from client: " << rec_buffer << std::endl;
     return rec_buffer;
 }
@@ -99,4 +100,8 @@ int server::send_msg(std::string msg)
         return -1;
     }
     return 0;
+}
+int server::Get_bufferSize(void)
+{
+    return rec_buffer.size();
 }
