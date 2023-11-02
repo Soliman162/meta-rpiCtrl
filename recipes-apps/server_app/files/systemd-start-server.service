@@ -2,7 +2,7 @@
 Description=Service file to Start server
 
 [Service]
-ExecStart=server
+ExecStart=/usr/bin/server
 Restart=always
 User=root
 
