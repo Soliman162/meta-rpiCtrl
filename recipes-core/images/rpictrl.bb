@@ -38,7 +38,7 @@ IMAGE_INSTALL:append = " net-tools ethtool"
 # install kernel modules
 IMAGE_INSTALL += " kernel-modules seg7-mod"
 
-IMAGE_INSTALL:append = " main-app "
+IMAGE_INSTALL:append = " main-app serverctl-start"
 
 ###############################################
 
