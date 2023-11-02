@@ -7,6 +7,7 @@
 #include <netdb.h>
 #include<iterator>  
 #include<vector> 
+#include <cstdlib>
 
 #include "seg7_header.hpp"
 #include "server.hpp"
@@ -28,6 +29,7 @@ int main(void)
 {
     char OP_number;
     int pin_number {0};
+    std::string server_service_name = "systemd-start-server";
 
     server pi;
     std::string rec(pi.Get_bufferSize(),'\0');
@@ -140,7 +142,7 @@ int main(void)
                 seg0.~seg7_display();
                 seg1.~seg7_display();
                 pi.~server();
-                exit (0);
+                std::system(("systemctl restart"+server_service_name).c_str());
                 break;          
             default:
                 pi.send_msg(static_cast<std::string>("command not available\n"));
