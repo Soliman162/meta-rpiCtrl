@@ -1,4 +1,4 @@
-# Creating a Yocto Image for Raspberry Pi 3 b+
+# meta-rpictrl
 
 ### This README provides step-by-step instructions for creating a Yocto image to Control raspberry pi using socket programming.
 
