@@ -1,0 +1,10 @@
+[Unit]
+Description=Service file to Start server
+
+[Service]
+ExecStart=server
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
